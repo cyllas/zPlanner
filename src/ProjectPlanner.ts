@@ -40,26 +40,26 @@ export class ProjectPlanner {
     try {
       if (!existsSync(this.filePath)) {
         const defaultProject = this.createDefaultProject();
-        writeFileSync(
-          this.filePath,
-          JSON.stringify(defaultProject, null, 2),
-          'utf-8'
-        );
+        this.saveProject(defaultProject);
         return defaultProject;
       }
 
       const content = readFileSync(this.filePath, 'utf-8');
-      return JSON.parse(content);
+      const project = JSON.parse(content);
+      return project || this.createDefaultProject();
+
     } catch (error) {
-      throw new Error(`Erro ao carregar projeto: ${error}`);
+      const defaultProject = this.createDefaultProject();
+      this.saveProject(defaultProject);
+      return defaultProject;
     }
   }
 
-  private saveProject(): void {
+  private saveProject(project: Project): void {
     try {
       writeFileSync(
         this.filePath,
-        JSON.stringify(this.project, null, 2),
+        JSON.stringify(project, null, 2),
         'utf-8'
       );
     } catch (error) {
@@ -76,9 +76,11 @@ export class ProjectPlanner {
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.executed).length;
 
+    if (totalTasks === 0) return { tasks: 0, phases: 0 };
+
     return {
       tasks: Number(((completedTasks / totalTasks) * 100).toFixed(1)),
-      phases: Number(((completedPhases / totalPhases) * 100).toFixed(1))
+      phases: totalPhases === 0 ? 0 : Number(((completedPhases / totalPhases) * 100).toFixed(1))
     };
   }
 
@@ -101,15 +103,10 @@ export class ProjectPlanner {
     }
 
     task.executed = true;
-    
-    // Verifica se todas as tarefas da fase foram concluídas
-    const allTasksCompleted = phase.tasks.every(t => t.executed);
-    if (allTasksCompleted) {
-      phase.executed = true;
-    }
+    phase.executed = phase.tasks.every(t => t.executed);
 
     this.project.last_update = new Date().toLocaleDateString('pt-BR');
-    this.saveProject();
+    this.saveProject(this.project);
   }
 
   public pendingTask(phaseId: string, taskId: string): void {
@@ -127,7 +124,7 @@ export class ProjectPlanner {
     phase.executed = false;
 
     this.project.last_update = new Date().toLocaleDateString('pt-BR');
-    this.saveProject();
+    this.saveProject(this.project);
   }
 
   public addPhase(phaseId: string, name: string): void {
@@ -142,7 +139,7 @@ export class ProjectPlanner {
     };
 
     this.project.last_update = new Date().toLocaleDateString('pt-BR');
-    this.saveProject();
+    this.saveProject(this.project);
   }
 
   public addTask(phaseId: string, taskId: string, name: string): void {
@@ -162,7 +159,7 @@ export class ProjectPlanner {
     });
 
     this.project.last_update = new Date().toLocaleDateString('pt-BR');
-    this.saveProject();
+    this.saveProject(this.project);
   }
 
   public removePhase(phaseId: string): void {
@@ -173,7 +170,7 @@ export class ProjectPlanner {
     delete this.project.phases[phaseId];
 
     this.project.last_update = new Date().toLocaleDateString('pt-BR');
-    this.saveProject();
+    this.saveProject(this.project);
   }
 
   public removeTask(phaseId: string, taskId: string): void {
@@ -190,6 +187,6 @@ export class ProjectPlanner {
     phase.tasks.splice(taskIndex, 1);
 
     this.project.last_update = new Date().toLocaleDateString('pt-BR');
-    this.saveProject();
+    this.saveProject(this.project);
   }
 }

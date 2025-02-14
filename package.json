@@ -4,7 +4,9 @@
   "description": "Gerenciador de planejamento de projetos com fases e tarefas",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": "./dist/cli.js",
+  "bin": {
+    "zplanner": "./dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest",

@@ -32,7 +32,7 @@ describe('ProjectPlanner', () => {
 
     test('deve carregar um arquivo existente', () => {
       const existingPlanner = {
-        project: "Projeto Teste",
+        project: 'Projeto Teste',
         last_update: new Date().toLocaleDateString('pt-BR'),
         phases: {}
       };
@@ -84,7 +84,7 @@ describe('ProjectPlanner', () => {
         throw new Error('ENOENT: no such file or directory');
       });
       
-      const newPlanner = new ProjectPlanner(testFile);
+      new ProjectPlanner(testFile);
       expect(fs.writeFileSync).toHaveBeenCalled();
     });
   });

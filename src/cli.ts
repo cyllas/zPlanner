@@ -1,105 +1,83 @@
 #!/usr/bin/env node
+import { Command } from 'commander';
 import { ProjectPlanner } from './ProjectPlanner';
-import { program } from 'commander';
-import chalk from 'chalk';
+import { join } from 'path';
 
-const planner = new ProjectPlanner(process.cwd() + '/planner.json');
+const program = new Command();
+const planner = new ProjectPlanner(join(process.cwd(), 'planner.json'));
 
 program
   .name('zplanner')
-  .description('CLI para gerenciar planejamento de projetos')
-  .version('1.0.0');
+  .description('CLI para gerenciar projetos')
+  .version('1.0.1');
 
 program
   .command('list')
-  .description('Lista todas as tarefas e seus status')
+  .description('Lista todas as fases e tarefas')
   .action(() => {
     const tasks = planner.listTasks();
-    
-    console.log('\n📋 Status atual das tarefas:\n');
-    
-    tasks.forEach(({ phaseId, phase }) => {
-      console.log(`${phase.name}:`);
-      phase.tasks.forEach(task => {
-        const status = task.executed ? chalk.green('✅') : chalk.gray('⭕');
-        console.log(`${status} ${task.id}: ${task.name}`);
-      });
-      console.log('');
+    tasks.forEach(({ phase }) => {
+      console.log(`\n📦 ${phase.name}:`);
+      if (phase.tasks.length === 0) {
+        console.log('   Nenhuma tarefa');
+      } else {
+        phase.tasks.forEach(task => {
+          const status = task.executed ? '✅' : '⭕';
+          console.log(`   ${status} ${task.name}`);
+        });
+      }
     });
   });
 
 program
-  .command('complete')
-  .description('Marca uma tarefa como concluída')
-  .argument('<phaseId>', 'ID da fase')
-  .argument('<taskId>', 'ID da tarefa')
-  .action((phaseId, taskId) => {
-    try {
-      planner.completeTask(phaseId, taskId);
-      console.log(chalk.green('✅ Planner atualizado com sucesso!'));
-      console.log(chalk.green(`✅ Tarefa ${taskId} marcada como concluída!`));
-    } catch (err) {
-      const error = err as Error;
-      console.error(chalk.red(`❌ ${error.message}`));
-    }
-  });
-
-program
-  .command('pending')
-  .description('Marca uma tarefa como pendente')
-  .argument('<phaseId>', 'ID da fase')
-  .argument('<taskId>', 'ID da tarefa')
-  .action((phaseId, taskId) => {
-    try {
-      planner.pendingTask(phaseId, taskId);
-      console.log(chalk.yellow('⚠️  Planner atualizado com sucesso!'));
-      console.log(chalk.yellow(`⚠️  Tarefa ${taskId} marcada como pendente!`));
-    } catch (err) {
-      const error = err as Error;
-      console.error(chalk.red(`❌ ${error.message}`));
-    }
-  });
-
-program
-  .command('progress')
-  .description('Mostra o progresso geral do projeto')
-  .action(() => {
-    const progress = planner.getProgress();
-    
-    console.log('\n📊 Progresso do Projeto:\n');
-    console.log(`Tarefas: ${progress.tasks}%`);
-    console.log(`Fases: ${progress.phases}%`);
-  });
-
-program
   .command('add-phase')
-  .description('Adiciona uma nova fase')
-  .argument('<phaseId>', 'ID da fase')
+  .description('Adiciona uma nova fase ao projeto')
+  .argument('<id>', 'ID da fase')
   .argument('<name>', 'Nome da fase')
-  .action((phaseId, name) => {
-    try {
-      planner.addPhase(phaseId, name);
-      console.log(chalk.green(`✅ Fase "${name}" adicionada com sucesso!`));
-    } catch (err) {
-      const error = err as Error;
-      console.error(chalk.red(`❌ ${error.message}`));
-    }
+  .action((id: string, name: string) => {
+    planner.addPhase(id, name);
+    console.log(`Fase "${name}" adicionada com sucesso!`);
   });
 
 program
   .command('add-task')
-  .description('Adiciona uma nova tarefa')
-  .argument('<phaseId>', 'ID da fase')
-  .argument('<taskId>', 'ID da tarefa')
+  .description('Adiciona uma nova tarefa a uma fase')
+  .argument('<phase>', 'ID da fase')
+  .argument('<id>', 'ID da tarefa')
   .argument('<name>', 'Nome da tarefa')
-  .action((phaseId, taskId, name) => {
-    try {
-      planner.addTask(phaseId, taskId, name);
-      console.log(chalk.green(`✅ Tarefa "${name}" adicionada com sucesso!`));
-    } catch (err) {
-      const error = err as Error;
-      console.error(chalk.red(`❌ ${error.message}`));
-    }
+  .action((phase: string, id: string, name: string) => {
+    planner.addTask(phase, id, name);
+    console.log(`Tarefa "${name}" adicionada com sucesso!`);
+  });
+
+program
+  .command('complete-task')
+  .description('Marca uma tarefa como concluída')
+  .argument('<phase>', 'ID da fase')
+  .argument('<id>', 'ID da tarefa')
+  .action((phase: string, id: string) => {
+    planner.completeTask(phase, id);
+    console.log(`Tarefa "${id}" marcada como concluída!`);
+  });
+
+program
+  .command('pending-task')
+  .description('Marca uma tarefa como pendente')
+  .argument('<phase>', 'ID da fase')
+  .argument('<id>', 'ID da tarefa')
+  .action((phase: string, id: string) => {
+    planner.pendingTask(phase, id);
+    console.log(`Tarefa "${id}" marcada como pendente!`);
+  });
+
+program
+  .command('progress')
+  .description('Mostra o progresso do projeto')
+  .action(() => {
+    const progress = planner.getProgress();
+    console.log('Progresso do Projeto:');
+    console.log(`- Tarefas: ${progress.tasks}%`);
+    console.log(`- Fases: ${progress.phases}%`);
   });
 
 program.parse();

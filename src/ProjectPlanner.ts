@@ -30,7 +30,7 @@ export class ProjectPlanner {
 
   private createDefaultProject(): Project {
     return {
-      project: "Novo Projeto",
+      project: 'Novo Projeto',
       last_update: new Date().toLocaleDateString('pt-BR'),
       phases: {}
     };

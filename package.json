@@ -4,6 +4,9 @@
   "description": "Gerenciador de planejamento de projetos com fases e tarefas",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "zplanner": "./dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest",
@@ -11,28 +14,28 @@
     "prepare": "npm run build"
   },
   "keywords": [
-    "project",
     "planner",
+    "project",
+    "management",
     "tasks",
     "phases",
-    "management"
+    "cli"
   ],
-  "author": "cyllaselia",
+  "author": "Cylla Selia",
   "license": "MIT",
-  "bin": {
-    "zplanner": "./dist/cli.js"
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "@types/node": "^18.19.76",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
-    "chalk": "^5.4.1",
-    "commander": "^13.1.0",
-    "eslint": "^8.35.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.57.0",
     "jest": "^29.7.0",
-    "ts-jest": "^29.2.5",
-    "typescript": "^4.9.5"
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
   },
   "files": [
     "dist",

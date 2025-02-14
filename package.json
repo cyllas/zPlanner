@@ -1,6 +1,6 @@
 {
   "name": "zplanner",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Gerenciador de planejamento de projetos com fases e tarefas",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

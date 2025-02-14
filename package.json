@@ -1,5 +1,5 @@
 {
-  "name": "zplanner",
+  "name": "@cyllas/zplanner",
   "version": "1.1.0",
   "description": "Gerenciador de planejamento de projetos com fases e tarefas",
   "main": "dist/index.js",
@@ -47,6 +47,7 @@
     "node": ">=14.0.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

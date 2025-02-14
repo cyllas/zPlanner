@@ -1,5 +1,5 @@
 {
-  "name": "@cyllas/zplanner",
+  "name": "zplanner-cli",
   "version": "1.1.0",
   "description": "Gerenciador de planejamento de projetos com fases e tarefas",
   "main": "dist/index.js",

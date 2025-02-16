@@ -1,29 +1,43 @@
 {
   "name": "zplanner",
-  "version": "1.2.0",
-  "description": "Gerenciador de planejamento de projetos com fases e tarefas",
+  "version": "1.4.0",
+  "description": "A command-line project planning and management tool with HTML export capabilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "zplanner": "dist/cli.js"
+    "zplanner": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest",
-    "lint": "eslint src --ext .ts",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run build"
+    "test": "jest --coverage",
+    "start": "node dist/cli.js",
+    "dev": "ts-node src/cli.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
   },
   "keywords": [
-    "planner",
     "project",
+    "planning",
     "management",
     "tasks",
-    "phases",
-    "cli"
+    "cli",
+    "html",
+    "typescript"
   ],
-  "author": "Cylla Selia",
+  "author": "Cyllas",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyllas/zPlanner/issues"
+  },
+  "homepage": "https://github.com/cyllas/zPlanner#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "commander": "^11.1.0",
     "chalk": "^4.1.2"
@@ -38,16 +52,38 @@
     "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
+  },
+  "preferGlobal": true,
+  "man": "./docs/man/zplanner.1",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/cyllas"
+  },
+  "usage": {
+    "installation": "npm install -g zplanner",
+    "commands": {
+      "init": "zplanner init <project-name>",
+      "add-phase": "zplanner add-phase <phase-name>",
+      "add-task": "zplanner add-task <phase> <task-id> <description>",
+      "add-subtask": "zplanner add-subtask <phase> <parent-task> <subtask-id> <description>",
+      "complete": "zplanner complete <phase> <task>",
+      "export": "zplanner export <output-path>",
+      "list": "zplanner list",
+      "help": "zplanner --help"
+    },
+    "examples": {
+      "create-project": "zplanner init \"My New Project\"",
+      "add-phase": "zplanner add-phase \"Planning Phase\"",
+      "add-task": "zplanner add-task \"Planning Phase\" \"1.1\" \"Define requirements\"",
+      "add-subtask": "zplanner add-subtask \"Planning Phase\" \"1.1\" \"1.1.1\" \"Gather requirements with client\"",
+      "export-html": "zplanner export ./reports/project.html"
+    }
+  },
+  "config": {
+    "language": "en-US",
+    "dateFormat": "MM/DD/YYYY",
+    "timeZone": "UTC"
   }
 }

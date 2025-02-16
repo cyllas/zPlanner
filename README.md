@@ -1,172 +1,189 @@
-# 📋 zPlanner
+# ZPlanner v1.4.0
 
-Um gerenciador de projetos simples e eficiente via linha de comando.
+ZPlanner is a command-line tool developed to assist in project planning and management, with a special focus on software development projects. The project was born from the need to have a simple yet powerful tool that would allow project management directly from the terminal, without the need for complex graphical interfaces.
 
-## 📦 Instalação
+One of ZPlanner's main differentiators is its ability to function as a memory system for AI-assisted development in IDEs with prompt capabilities. By maintaining a structured and hierarchical project record, ZPlanner helps preserve development context, allowing AI assistants to better understand the project's structure, history, and current state, resulting in more accurate and contextualized suggestions and assistance.
+
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://www.npmjs.com/package/zplanner)
+[![License](https://img.shields.io/npm/l/zplanner.svg)](https://github.com/cyllas/zPlanner/blob/main/LICENSE)
+[![Node Version](https://img.shields.io/node/v/zplanner.svg)](https://nodejs.org)
+
+## Purpose
+
+ZPlanner was created with the following objectives:
+
+1. **Simplicity**: Enable project management directly from the terminal
+2. **Efficiency**: Minimize time spent on administrative tasks
+3. **Flexibility**: Adapt to different project types and methodologies
+4. **Visualization**: Generate clear and responsive HTML reports
+5. **Traceability**: Maintain progress history and updates
+6. **AI Context**: Function as a memory system for AI-assisted development, maintaining structured project context
+
+### AI First Design
+
+ZPlanner was designed with modern AI-assisted development in mind:
+
+- **Context Preservation**: Maintains a structured history that serves as memory for AI assistants
+- **Hierarchical Structure**: Organization that facilitates project understanding by AI systems
+- **Change Tracking**: Allows AI assistants to understand project evolution
+- **Clear Documentation**: Standardized format that improves interpretation by AI systems
+
+## Features
+
+### Project Management
+
+- Project creation and configuration
+- Hierarchical structure (phases, tasks, and subtasks)
+- Automatic progress calculation
+- Responsive HTML export
+- Update date tracking
+
+### Phase Organization
+
+- Project phase creation
+- Phase reordering
+- Phase renaming
+- Phase removal
+- Progress calculation per phase
+
+### Task Management
+
+- Main task addition
+- Subtask creation
+- Completion marking
+- Description updates
+- Task removal
+
+### HTML Reports
+
+- Modern and responsive design
+- Clear hierarchy visualization
+- Progress indicators
+- Update history
+- Professional styling with BEM CSS
+
+## Installation
 
 ```bash
 npm install -g zplanner
 ```
 
-## 🚀 Uso Rápido
+## Usage Guide
+
+### Basic Commands
+
+#### Project Management
 
 ```bash
-# Criar uma nova fase
-zplanner add-phase fase1 "Fase de Planejamento"
+# Initialize new project
+zplanner init "Project Name"
 
-# Adicionar uma tarefa à fase
-zplanner add-task fase1 1.1 "Definir requisitos"
-
-# Marcar tarefa como concluída
-zplanner complete-task fase1 1.1
-
-# Ver progresso do projeto
-zplanner progress
-```
-
-## 📚 Documentação Detalhada
-
-### Estrutura do Projeto
-
-O zPlanner organiza seu projeto em fases e tarefas:
-
-```json
-{
-  "project": "Meu Projeto",
-  "last_update": "14/02/2025",
-  "phases": {
-    "fase1": {
-      "name": "Fase de Planejamento",
-      "executed": false,
-      "tasks": [
-        {
-          "id": "1.1",
-          "name": "Definir requisitos",
-          "executed": false
-        }
-      ]
-    }
-  }
-}
-```
-
-### Comandos Disponíveis
-
-#### 1. Gerenciamento de Fases
-
-```bash
-# Adicionar uma nova fase
-zplanner add-phase <id> <nome>
-
-# Exemplo:
-zplanner add-phase design "Design do Sistema"
-zplanner add-phase dev "Desenvolvimento"
-zplanner add-phase test "Testes"
-```
-
-#### 2. Gerenciamento de Tarefas
-
-```bash
-# Adicionar uma nova tarefa
-zplanner add-task <fase> <id> <nome>
-
-# Exemplo:
-zplanner add-task design 1.1 "Criar wireframes"
-zplanner add-task design 1.2 "Definir paleta de cores"
-zplanner add-task dev 2.1 "Configurar ambiente"
-```
-
-#### 3. Status das Tarefas
-
-```bash
-# Marcar tarefa como concluída
-zplanner complete-task <fase> <id>
-
-# Marcar tarefa como pendente
-zplanner pending-task <fase> <id>
-
-# Exemplos:
-zplanner complete-task design 1.1  # Marca "Criar wireframes" como concluída
-zplanner pending-task dev 2.1      # Marca "Configurar ambiente" como pendente
-```
-
-#### 4. Visualização e Progresso
-
-```bash
-# Listar todas as fases e tarefas
+# List project structure
 zplanner list
 
-# Ver progresso do projeto
-zplanner progress
+# Export HTML report
+zplanner export ./path/report.html
 ```
 
-### 📊 Exemplo de Saída
-
-#### Listagem de Tarefas
-```
-📦 Design do Sistema:
-   ✅ Criar wireframes
-   ⭕ Definir paleta de cores
-
-📦 Desenvolvimento:
-   ⭕ Configurar ambiente
-```
-
-#### Progresso do Projeto
-```
-Progresso do Projeto:
-- Tarefas: 33.3%
-- Fases: 0%
-```
-
-## 🛠️ Uso Avançado
-
-### 1. Organização de Fases
-
-Recomendamos organizar as fases em ordem cronológica:
+#### Phase Management
 
 ```bash
-# Exemplo de estrutura cronológica
-zplanner add-phase p1 "1. Planejamento"
-zplanner add-phase p2 "2. Design"
-zplanner add-phase p3 "3. Desenvolvimento"
-zplanner add-phase p4 "4. Testes"
-zplanner add-phase p5 "5. Deploy"
+# Add phase
+zplanner add-phase "Phase Name"
+
+# Rename phase
+zplanner rename-phase "Current Name" "New Name"
+
+# Move phase
+zplanner move-phase "Phase Name" 2
+
+# Remove phase
+zplanner remove-phase "Phase Name"
 ```
 
-### 2. Nomenclatura de Tarefas
-
-Use IDs hierárquicos para melhor organização:
+#### Task Management
 
 ```bash
-# Formato: <fase>.<número>
-zplanner add-task p1 1.1 "Análise de requisitos"
-zplanner add-task p1 1.2 "Definição de escopo"
-zplanner add-task p1 1.2.1 "Escopo MVP"
-zplanner add-task p1 1.2.2 "Escopo futuro"
+# Add task
+zplanner add-task "Phase" "1.1" "Task Description"
+
+# Add subtask
+zplanner add-subtask "Phase" "1.1" "1.1.1" "Subtask Description"
+
+# Mark as complete
+zplanner complete "Phase" "1.1"
+
+# Update description
+zplanner update-task "Phase" "1.1" "New Description"
+
+# Remove task
+zplanner remove-task "Phase" "1.1"
 ```
 
-### 3. Acompanhamento de Progresso
+## Project Structure
 
-O progresso é calculado automaticamente:
-- **Tarefas**: Porcentagem de tarefas concluídas em relação ao total
-- **Fases**: Porcentagem de fases com todas as tarefas concluídas
+The project is organized as follows:
 
-## 📝 Arquivo de Configuração
+```
+zPlanner/
+├── src/
+│   ├── cli.ts                 # Command-line interface
+│   ├── index.ts              # Main entry point
+│   ├── ProjectPlanner.ts     # Core project management
+│   ├── config/              # Project configurations
+│   ├── services/            # Business services
+│   │   ├── PhaseService.ts  # Phase management
+│   │   ├── TaskService.ts   # Task management
+│   │   └── progress/        # Progress calculation
+│   └── templates/           # HTML and CSS templates
+├── dist/                    # Compiled code
+└── docs/                    # Documentation
+```
 
-O zPlanner cria automaticamente um arquivo `planner.json` no diretório atual. Você pode:
-- Fazer backup deste arquivo
-- Versioná-lo com git
-- Editá-lo manualmente (com cuidado)
+## Development
 
-## 🤝 Contribuindo
+### Prerequisites
 
-1. Faça um fork do projeto
-2. Crie sua branch de feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add: nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+- Node.js >= 14.0.0
+- npm >= 6.0.0
 
-## 📄 Licença
+### Environment Setup
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+```bash
+# Clone repository
+git clone https://github.com/cyllas/zPlanner.git
+
+# Install dependencies
+cd zPlanner
+npm install
+
+# Run tests
+npm test
+
+# Start development mode
+npm run dev
+```
+
+## Configuration
+
+The `settings.ts` file allows configuration of:
+
+```typescript
+export const settings = {
+  defaultLanguage: "en-US",
+  dateFormat: "MM/DD/YYYY",
+  timeZone: "UTC",
+  projectDefaults: {
+    outputFormat: "html",
+    indentSize: 2,
+  },
+  repository: {
+    url: "https://github.com/cyllas/zPlanner",
+  },
+  version: "1.4.0",
+};
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

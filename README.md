@@ -1,8 +1,8 @@
-# ZPlanner v1.4.0
+# zPlanner v1.4.0
 
-ZPlanner is a command-line tool developed to assist in project planning and management, with a special focus on software development projects. The project was born from the need to have a simple yet powerful tool that would allow project management directly from the terminal, without the need for complex graphical interfaces.
+zPlanner is a command-line tool developed to assist in project planning and management, with a special focus on software development projects. The project was born from the need to have a simple yet powerful tool that would allow project management directly from the terminal, without the need for complex graphical interfaces.
 
-One of ZPlanner's main differentiators is its ability to function as a memory system for AI-assisted development in IDEs with prompt capabilities. By maintaining a structured and hierarchical project record, ZPlanner helps preserve development context, allowing AI assistants to better understand the project's structure, history, and current state, resulting in more accurate and contextualized suggestions and assistance.
+One of zPlanner's main differentiators is its ability to function as a memory system for AI-assisted development in IDEs with prompt capabilities. By maintaining a structured and hierarchical project record, ZPlanner helps preserve development context, allowing AI assistants to better understand the project's structure, history, and current state, resulting in more accurate and contextualized suggestions and assistance.
 
 [![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://www.npmjs.com/package/zplanner)
 [![License](https://img.shields.io/npm/l/zplanner.svg)](https://github.com/cyllas/zPlanner/blob/main/LICENSE)
@@ -10,7 +10,7 @@ One of ZPlanner's main differentiators is its ability to function as a memory sy
 
 ## Purpose
 
-ZPlanner was created with the following objectives:
+zPlanner was created with the following objectives:
 
 1. **Simplicity**: Enable project management directly from the terminal
 2. **Efficiency**: Minimize time spent on administrative tasks
@@ -21,7 +21,7 @@ ZPlanner was created with the following objectives:
 
 ### AI First Design
 
-ZPlanner was designed with modern AI-assisted development in mind:
+zPlanner was designed with modern AI-assisted development in mind:
 
 - **Context Preservation**: Maintains a structured history that serves as memory for AI assistants
 - **Hierarchical Structure**: Organization that facilitates project understanding by AI systems
